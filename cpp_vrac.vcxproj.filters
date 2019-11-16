@@ -2,5 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="interproc_rw_lock_helper.cpp" />
+    <ClCompile Include="interproc_rw_lock.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="interproc_rw_lock.h" />
+    <ClInclude Include="interproc_rw_lock_helper.h" />
   </ItemGroup>
 </Project>
