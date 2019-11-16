@@ -6,7 +6,7 @@
 
 namespace tepp
 {
-	bool interproc_rw_lock_helper::is_ok(bool * c)
+	bool interproc_rw_lock_helper::is_ok(std::atomic_bool *  c)
 	{
 		return !c || !*c;
 	}
@@ -24,7 +24,7 @@ namespace tepp
 		return e == e_try_get_lock::ok;
 	}
 	
-	e_try_get_lock_or_cancel interproc_rw_lock_helper::try_get_lock_infinite(HANDLE & h, ulong_t wait_time, bool * c, std::string * err_msg)
+	e_try_get_lock_or_cancel interproc_rw_lock_helper::try_get_lock_infinite(HANDLE & h, ulong_t wait_time, std::atomic_bool *  c, std::string * err_msg)
 	{
 		return try_get_lock(h, wait_time, c, std::numeric_limits<int64_t>::max(), err_msg);
 	}
@@ -51,7 +51,7 @@ namespace tepp
 
 		return message;
 	}
-	e_try_get_lock_or_cancel interproc_rw_lock_helper::try_get_lock(HANDLE & h, ulong_t wait_time, bool * c, uint64_t max_tries, std::string * err_msg)
+	e_try_get_lock_or_cancel interproc_rw_lock_helper::try_get_lock(HANDLE & h, ulong_t wait_time, std::atomic_bool *  c, uint64_t max_tries, std::string * err_msg)
 	{
 		while (1)
 		{
@@ -77,16 +77,16 @@ namespace tepp
 			}
 		}
 	}
-	e_try_get_lock_infinite interproc_rw_lock_helper::try_get_lock_all_infinite(HANDLE * h, ulong_t count, ulong_t wait_time, bool * c, std::string * err_msg)
+	e_try_get_lock_infinite interproc_rw_lock_helper::try_get_lock_all_infinite(HANDLE * h, ulong_t count, ulong_t wait_time, std::atomic_bool *  c, std::string * err_msg)
 	{
 		return try_get_lock_multiple_infinite(h, count, true, wait_time, c, err_msg, nullptr);
 	 }
-	e_try_get_lock_infinite interproc_rw_lock_helper::try_get_lock_one_of_infinite(HANDLE * h, ulong_t count, ulong_t wait_time, bool * c, std::string * err_msg, int & locked_index)
+	e_try_get_lock_infinite interproc_rw_lock_helper::try_get_lock_one_of_infinite(HANDLE * h, ulong_t count, ulong_t wait_time, std::atomic_bool *  c, std::string * err_msg, int & locked_index)
 	{
 		return try_get_lock_multiple_infinite(h, count, false, wait_time, c, err_msg, &locked_index);
 	}
 
-	e_try_get_lock_infinite interproc_rw_lock_helper::try_get_lock_multiple_infinite(HANDLE * h, ulong_t count, bool all, ulong_t wait_time, bool * c, std::string * err_msg, int * locked_index)
+	e_try_get_lock_infinite interproc_rw_lock_helper::try_get_lock_multiple_infinite(HANDLE * h, ulong_t count, bool all, ulong_t wait_time, std::atomic_bool *  c, std::string * err_msg, int * locked_index)
 	{
 		while (1)
 		{

@@ -55,7 +55,7 @@ namespace tepp
 
 	}
 
-	bool interproc_rw_lock::read_under_lock(action0 f, bool * c, ulong_t pr_wait_ms, ulong_t pw_wait_ms , std::string * err_msg )
+	bool interproc_rw_lock::read_under_lock(action0 f, std::atomic_bool * c, ulong_t pr_wait_ms, ulong_t pw_wait_ms , std::string * err_msg )
 	{
 		
 		if (!is_ok(try_get_lock_infinite(_w, pw_wait_ms, c, err_msg)))
@@ -74,7 +74,7 @@ namespace tepp
 		return true;
 	}
 
-	bool interproc_rw_lock::write_under_lock(action0 f, bool * c, ulong_t pr_wait_ms, ulong_t pw_wait_ms, std::string * err_msg)
+	bool interproc_rw_lock::write_under_lock(action0 f, std::atomic_bool * c, ulong_t pr_wait_ms, ulong_t pw_wait_ms, std::string * err_msg)
 	{
 		if (!is_ok(try_get_lock_infinite(_w, pw_wait_ms, c, err_msg)))
 			return false;

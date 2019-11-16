@@ -65,10 +65,15 @@ int main()
 				std::cout << "err r:" << er << "\n";
 			continue;
 
-		case 't':
-			std::cout << "\nthrowing\n";
+		case 'W':
+			std::cout << "\nthrowing W\n";
+			if (!il->write_under_lock([] {throw 1; }, nullptr, 10, 10, &er))
+				std::cout << "err W:" << er << "\n";
+			continue;
+		case 'R':
+			std::cout << "\nthrowing R\n";
 			if (!il->read_under_lock([] {throw 1; }, nullptr, 10, 10, &er))
-				std::cout << "err r:" << er << "\n";
+				std::cout << "err R:" << er << "\n";
 			continue;
 
 		};
