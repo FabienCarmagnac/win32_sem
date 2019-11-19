@@ -1,4 +1,4 @@
-# win32_sem
+# Interprocess Slim Reader/Writer (SRW) Locks Windows Native C++11
 
 interproc_rw_lock class is designed to execute code with a inter-process sync mecanism for all sharing the same 'key'.
 It reproduces the Slim Reader/Writer (SRW) Locks on native c++ windows but in an interprocess way.
