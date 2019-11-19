@@ -12,7 +12,7 @@ namespace tepp
 		std::vector<HANDLE> _r;
 		HANDLE  _w;
 			   
-		interproc_rw_lock(HANDLE w, std::vector<HANDLE> && rconst);
+		interproc_rw_lock(HANDLE w, std::vector<HANDLE> && rconst) noexcept(true);
 		interproc_rw_lock() = delete;
 		interproc_rw_lock(const interproc_rw_lock &) = delete;
 
@@ -27,7 +27,7 @@ namespace tepp
 
 		*/
 
-		static interproc_rw_lock* try_create_interproc_rw_lock(const std::string & name, int max_readers);
+		static interproc_rw_lock* try_create_interproc_rw_lock(const std::string & name, int max_readers) noexcept(true);
 
 		/* Allow to execute code with 'read' role, eg may be in parallel with other readers process/thread but guaranteed with no writer.
 		For this, it acquires a writer-mutex, then one available reader mutex, then free writer-mutex, then invokes f, then release read-mutex. 
@@ -38,7 +38,7 @@ namespace tepp
 		@param err_msg if an error occurs while trying to acquire a lock, then the error is appended to this string (if not null). Can be null.
 		@return bool true if f has been invok, false either.
 		*/
-		bool read_under_lock(action0 f, std::atomic_bool * cancel = nullptr, ulong_t pr_wait_ms = wait_ms, ulong_t pw_wait_ms = wait_ms, std::string * err_msg = nullptr);
+		bool read_under_lock(action0 f, std::atomic_bool * cancel = nullptr, ulong_t pr_wait_ms = wait_ms, ulong_t pw_wait_ms = wait_ms, std::string * err_msg = nullptr) noexcept(true);
 
 		/* Allow to execute code with exclusive 'write' role, eg no other writer or reader process/thread can execute in parallel.
 		For this, it acquires a writer-mutex, then all reader-mutexes, then invokes f, then free all reader-mutexes, then release write-mutex.
@@ -49,7 +49,7 @@ namespace tepp
 		@param err_msg if an error occurs while trying to acquire a lock, then the error is appended to this string (if not null). Can be null.
 		@return bool true if f has been invok, false either.
 		*/
-		bool write_under_lock(action0 f, std::atomic_bool * cancel = nullptr, ulong_t pr_wait_ms = wait_ms, ulong_t pw_wait_ms = wait_ms, std::string * err_msg = nullptr);
+		bool write_under_lock(action0 f, std::atomic_bool * cancel = nullptr, ulong_t pr_wait_ms = wait_ms, ulong_t pw_wait_ms = wait_ms, std::string * err_msg = nullptr) noexcept(true);
 
 	};
 

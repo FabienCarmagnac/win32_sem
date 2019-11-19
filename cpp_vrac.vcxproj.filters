@@ -9,4 +9,7 @@
     <ClInclude Include="interproc_rw_lock.h" />
     <ClInclude Include="interproc_rw_lock_helper.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>

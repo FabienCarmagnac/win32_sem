@@ -6,34 +6,34 @@
 
 namespace tepp
 {
-	bool interproc_rw_lock_helper::is_ok(std::atomic_bool *  c)
+	bool interproc_rw_lock_helper::is_ok(std::atomic_bool *  c) noexcept(true)
 	{
 		return !c || !*c;
 	}
-	bool interproc_rw_lock_helper::is_ok(e_try_get_lock_or_cancel e)
+	bool interproc_rw_lock_helper::is_ok(e_try_get_lock_or_cancel e) noexcept(true)
 	{
 		return e == e_try_get_lock_or_cancel::ok;
 	}
-	bool interproc_rw_lock_helper::is_ok(e_try_get_lock_infinite e)
+	bool interproc_rw_lock_helper::is_ok(e_try_get_lock_infinite e) noexcept(true)
 	{
 		return e == e_try_get_lock_infinite::ok;
 	}
 
-	bool interproc_rw_lock_helper::is_ok(e_try_get_lock e)
+	bool interproc_rw_lock_helper::is_ok(e_try_get_lock e) noexcept(true)
 	{
 		return e == e_try_get_lock::ok;
 	}
 	
-	e_try_get_lock_or_cancel interproc_rw_lock_helper::try_get_lock_infinite(HANDLE & h, ulong_t wait_time, std::atomic_bool *  c, std::string * err_msg)
+	e_try_get_lock_or_cancel interproc_rw_lock_helper::try_get_lock_infinite(HANDLE & h, ulong_t wait_time, std::atomic_bool *  c, std::string * err_msg) noexcept(true)
 	{
 		return try_get_lock(h, wait_time, c, std::numeric_limits<int64_t>::max(), err_msg);
 	}
-	e_try_get_lock interproc_rw_lock_helper::try_get_lock_immediate(HANDLE & h, std::string * err_msg)
+	e_try_get_lock interproc_rw_lock_helper::try_get_lock_immediate(HANDLE & h, std::string * err_msg) noexcept(true)
 	{
 		return (e_try_get_lock)try_get_lock(h, 0, nullptr, 1, err_msg);
 	}
 
-	std::string interproc_rw_lock_helper::get_last_error()
+	std::string interproc_rw_lock_helper::get_last_error() noexcept(true)
 	{
 		//Get the error message, if any.
 		DWORD errorMessageID = ::GetLastError();
@@ -51,7 +51,7 @@ namespace tepp
 
 		return message;
 	}
-	e_try_get_lock_or_cancel interproc_rw_lock_helper::try_get_lock(HANDLE & h, ulong_t wait_time, std::atomic_bool *  c, uint64_t max_tries, std::string * err_msg)
+	e_try_get_lock_or_cancel interproc_rw_lock_helper::try_get_lock(HANDLE & h, ulong_t wait_time, std::atomic_bool *  c, uint64_t max_tries, std::string * err_msg) noexcept(true)
 	{
 		while (1)
 		{
@@ -77,16 +77,16 @@ namespace tepp
 			}
 		}
 	}
-	e_try_get_lock_infinite interproc_rw_lock_helper::try_get_lock_all_infinite(HANDLE * h, ulong_t count, ulong_t wait_time, std::atomic_bool *  c, std::string * err_msg)
+	e_try_get_lock_infinite interproc_rw_lock_helper::try_get_lock_all_infinite(HANDLE * h, ulong_t count, ulong_t wait_time, std::atomic_bool *  c, std::string * err_msg) noexcept(true)
 	{
 		return try_get_lock_multiple_infinite(h, count, true, wait_time, c, err_msg, nullptr);
 	 }
-	e_try_get_lock_infinite interproc_rw_lock_helper::try_get_lock_one_of_infinite(HANDLE * h, ulong_t count, ulong_t wait_time, std::atomic_bool *  c, std::string * err_msg, int & locked_index)
+	e_try_get_lock_infinite interproc_rw_lock_helper::try_get_lock_one_of_infinite(HANDLE * h, ulong_t count, ulong_t wait_time, std::atomic_bool *  c, std::string * err_msg, int & locked_index) noexcept(true)
 	{
 		return try_get_lock_multiple_infinite(h, count, false, wait_time, c, err_msg, &locked_index);
 	}
 
-	e_try_get_lock_infinite interproc_rw_lock_helper::try_get_lock_multiple_infinite(HANDLE * h, ulong_t count, bool all, ulong_t wait_time, std::atomic_bool *  c, std::string * err_msg, int * locked_index)
+	e_try_get_lock_infinite interproc_rw_lock_helper::try_get_lock_multiple_infinite(HANDLE * h, ulong_t count, bool all, ulong_t wait_time, std::atomic_bool *  c, std::string * err_msg, int * locked_index) noexcept(true)
 	{
 		while (1)
 		{
